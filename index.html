@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPSkins</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0612;
+    --bg2: #100b1e;
+    --bg3: #16102a;
+    --surface: #1c1535;
+    --surface2: #241d42;
+    --border: #3a2d6e;
+    --border2: #5a4aaa;
+    --accent1: #9b5de5;
+    --accent2: #c77dff;
+    --accent3: #e0aaff;
+    --accent-glow: #7b2fff;
+    --text: #f0eaff;
+    --text2: #b8a8e0;
+    --text3: #7a6aaa;
+    --gold: #ffd166;
+    --cyan: #06d6a0;
+    --pink: #ff6b9d;
+    --card-bg: rgba(28, 21, 53, 0.85);
+    --card-hover: rgba(36, 29, 66, 0.95);
+    --shadow: 0 8px 40px rgba(100, 40, 200, 0.25);
+    --shadow-hover: 0 16px 60px rgba(100, 40, 200, 0.45);
+    --radius: 16px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-theme="light"] {
+    --bg: #f0ebff;
+    --bg2: #e6deff;
+    --bg3: #ddd3ff;
+    --surface: #ffffff;
+    --surface2: #f5f0ff;
+    --border: #c4adf5;
+    --border2: #9b7ae0;
+    --accent1: #7c3aed;
+    --accent2: #9d4edd;
+    --accent3: #c084fc;
+    --accent-glow: #6d28d9;
+    --text: #1a0a3d;
+    --text2: #4b2e8a;
+    --text3: #7c5abf;
+    --gold: #b45309;
+    --cyan: #059669;
+    --pink: #be185d;
+    --card-bg: rgba(255,255,255,0.92);
+    --card-hover: rgba(245,240,255,0.98);
+    --shadow: 0 8px 40px rgba(100, 40, 200, 0.12);
+    --shadow-hover: 0 16px 60px rgba(100, 40, 200, 0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  /* ── BACKGROUND ── */
+  .bg-mesh {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(123,47,255,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(199,125,255,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(155,93,229,0.08) 0%, transparent 70%);
+  }
+  [data-theme="light"] .bg-mesh {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(147,97,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(196,132,252,0.10) 0%, transparent 55%);
+  }
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(155,93,229,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155,93,229,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,6,18,0.75);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--transition);
+  }
+  [data-theme="light"] nav { background: rgba(240,235,255,0.80); }
+
+  .logo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--accent1), var(--accent3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-links a {
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.85rem;
+    color: var(--text2); text-decoration: none; padding: 8px 18px;
+    border-radius: 50px; letter-spacing: 0.5px; text-transform: uppercase;
+    transition: all var(--transition);
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--accent3);
+    background: rgba(155,93,229,0.15);
+  }
+
+  #theme-btn {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text2); cursor: pointer; padding: 8px 14px; border-radius: 50px;
+    font-size: 1rem; transition: all var(--transition);
+    display: flex; align-items: center; gap: 6px;
+  }
+  #theme-btn:hover { border-color: var(--accent1); color: var(--accent2); transform: scale(1.05); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 120px 40px 80px; text-align: center; position: relative; z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(155,93,229,0.15); border: 1px solid var(--border2);
+    padding: 6px 18px; border-radius: 50px; margin-bottom: 32px;
+    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent3); font-weight: 500;
+    animation: fadeSlide 0.8s ease both;
+  }
+  .hero-badge::before { content: '◈'; font-size: 0.7rem; }
+
+  .hero h1 {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.05; letter-spacing: -2px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent3) 50%, var(--accent1) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    animation: fadeSlide 0.8s 0.1s ease both;
+  }
+  [data-theme="light"] .hero h1 {
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent1) 60%, var(--accent-glow) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    max-width: 560px; font-size: 1.05rem; color: var(--text2); line-height: 1.7;
+    margin-bottom: 48px; animation: fadeSlide 0.8s 0.2s ease both;
+  }
+
+  /* ── SEARCH BOX ── */
+  .search-container {
+    width: 100%; max-width: 640px;
+    animation: fadeSlide 0.8s 0.3s ease both;
+  }
+  .search-box {
+    display: flex; gap: 0;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    box-shadow: var(--shadow);
+  }
+  .search-box:focus-within {
+    border-color: var(--accent1);
+    box-shadow: 0 0 0 4px rgba(155,93,229,0.2), var(--shadow-hover);
+  }
+  .search-box input {
+    flex: 1; padding: 18px 24px;
+    background: transparent; border: none; outline: none;
+    font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--text);
+    letter-spacing: 1px;
+  }
+  .search-box input::placeholder { color: var(--text3); }
+  .search-box button {
+    padding: 18px 28px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent-glow));
+    border: none; cursor: pointer; color: #fff;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 1px; transition: all var(--transition);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .search-box button:hover { filter: brightness(1.15); }
+
+  /* stats pills */
+  .stats-row {
+    display: flex; gap: 16px; margin-top: 28px; justify-content: center; flex-wrap: wrap;
+    animation: fadeSlide 0.8s 0.4s ease both;
+  }
+  .stat-pill {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 8px 20px; border-radius: 50px; font-size: 0.8rem;
+    color: var(--text2); display: flex; align-items: center; gap: 8px;
+  }
+  .stat-pill strong { color: var(--accent2); font-family: 'Poppins', sans-serif; }
+
+  /* ── RESULT ── */
+  #result-section {
+    position: relative; z-index: 1;
+    padding: 0 40px 80px; max-width: 900px; margin: 0 auto;
+  }
+
+  .result-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-hover);
+    backdrop-filter: blur(24px);
+    animation: cardIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .result-header {
+    background: linear-gradient(135deg, rgba(123,47,255,0.3), rgba(155,93,229,0.15));
+    padding: 28px 36px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .result-id-badge {
+    font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1rem;
+    background: var(--accent1); color: #fff;
+    padding: 6px 16px; border-radius: 50px; letter-spacing: 1px;
+  }
+  .result-cat {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent3); background: rgba(155,93,229,0.15);
+    padding: 5px 14px; border-radius: 50px; border: 1px solid var(--border2);
+  }
+
+  .result-body {
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 0;
+  }
+
+  .skin-preview {
+    width: 220px; background: rgba(0,0,0,0.25);
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px 24px; border-right: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  [data-theme="light"] .skin-preview { background: rgba(155,93,229,0.06); }
+  .skin-preview::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(155,93,229,0.12), transparent 70%);
+  }
+  .skin-preview img {
+    max-width: 140px; max-height: 200px; object-fit: contain;
+    position: relative; z-index: 1;
+    filter: drop-shadow(0 8px 24px rgba(155,93,229,0.5));
+    image-rendering: pixelated;
+  }
+  .no-img {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    color: var(--text3); font-size: 0.8rem; text-align: center;
+  }
+  .no-img-icon { font-size: 3rem; opacity: 0.4; }
+
+  .skin-info { padding: 36px; }
+  .skin-name {
+    font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 2rem;
+    line-height: 1.1; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text), var(--accent3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  [data-theme="light"] .skin-name {
+    background: linear-gradient(135deg, var(--text), var(--accent1));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .modelsa-tag {
+    font-size: 0.78rem; color: var(--cyan); background: rgba(6,214,160,0.1);
+    border: 1px solid rgba(6,214,160,0.25); padding: 3px 12px; border-radius: 50px;
+    display: inline-block; margin-bottom: 24px; letter-spacing: 1px;
+  }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .info-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 20px;
+    transition: border-color var(--transition);
+  }
+  .info-item:hover { border-color: var(--border2); }
+  .info-label {
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 6px;
+  }
+  .info-value {
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.95rem;
+    color: var(--text);
+  }
+  .info-value.highlight { color: var(--accent2); }
+  .info-value.org { color: var(--gold); }
+  .info-value.cargo { color: var(--pink); }
+
+  /* error */
+  .error-card {
+    background: var(--card-bg); border: 1px solid rgba(255,107,157,0.3);
+    border-radius: 24px; padding: 48px; text-align: center;
+    backdrop-filter: blur(20px);
+    animation: cardIn 0.4s ease both;
+  }
+  .error-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; }
+  .error-card h3 { font-family: 'Poppins',sans-serif; font-size: 1.4rem; color: var(--pink); margin-bottom: 8px; }
+  .error-card p { color: var(--text2); font-size: 0.9rem; }
+
+  /* ── BROWSE SECTION ── */
+  #browse {
+    position: relative; z-index: 1; padding: 80px 40px;
+  }
+  .section-title {
+    font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 2rem;
+    text-align: center; margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--text), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  [data-theme="light"] .section-title {
+    background: linear-gradient(135deg, var(--text), var(--accent1));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-sub { text-align: center; color: var(--text2); margin-bottom: 40px; font-size: 0.9rem; }
+
+  /* filter tabs */
+  .filter-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px;
+  }
+  .filter-tab {
+    padding: 8px 20px; border-radius: 50px; font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text2);
+    transition: all var(--transition);
+  }
+  .filter-tab:hover { border-color: var(--border2); color: var(--accent3); }
+  .filter-tab.active {
+    background: linear-gradient(135deg, var(--accent1), var(--accent-glow));
+    border-color: transparent; color: #fff;
+  }
+
+  /* grid */
+  .skins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px; max-width: 1300px; margin: 0 auto;
+  }
+  .skin-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 16px;
+    text-align: center; cursor: pointer;
+    transition: all var(--transition);
+    backdrop-filter: blur(16px);
+    position: relative; overflow: hidden;
+  }
+  .skin-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(155,93,229,0), rgba(155,93,229,0.08));
+    opacity: 0; transition: opacity var(--transition);
+  }
+  .skin-card:hover { transform: translateY(-6px); border-color: var(--border2); box-shadow: var(--shadow-hover); }
+  .skin-card:hover::before { opacity: 1; }
+
+  .skin-card-img {
+    height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    position: relative;
+  }
+  .skin-card-img img {
+    max-height: 100%; max-width: 80px; object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 4px 12px rgba(155,93,229,0.4));
+    transition: transform var(--transition);
+  }
+  .skin-card:hover .skin-card-img img { transform: scale(1.08) translateY(-4px); }
+  .skin-card-id {
+    position: absolute; top: 0; right: 0;
+    background: var(--accent1); color: #fff;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.65rem;
+    padding: 2px 8px; border-radius: 0 8px 0 8px; letter-spacing: 1px;
+  }
+  .skin-card-name {
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.78rem;
+    color: var(--text); line-height: 1.3; margin-bottom: 8px;
+  }
+  .skin-card-badges { display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; }
+  .badge-cat {
+    font-size: 0.6rem; padding: 2px 8px; border-radius: 50px; letter-spacing: 1px;
+    font-weight: 500;
+  }
+  .badge-org { background: rgba(255,209,102,0.15); color: var(--gold); border: 1px solid rgba(255,209,102,0.25); }
+  .badge-emp { background: rgba(6,214,160,0.12); color: var(--cyan); border: 1px solid rgba(6,214,160,0.2); }
+  .badge-loja { background: rgba(155,93,229,0.15); color: var(--accent2); border: 1px solid var(--border); }
+
+  .no-img-card {
+    height: 110px; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; color: var(--border2); margin-bottom: 14px;
+    background: var(--surface); border-radius: 10px;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    position: relative; z-index: 1; padding: 100px 40px;
+  }
+  .about-inner {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .about-text .section-title { text-align: left; }
+  .about-text p { color: var(--text2); line-height: 1.8; margin-bottom: 20px; font-size: 0.92rem; }
+  .about-features { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+  .about-feat {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; font-size: 0.85rem; color: var(--text2);
+    transition: all var(--transition);
+  }
+  .about-feat:hover { border-color: var(--accent1); color: var(--text); }
+  .about-feat .icon { font-size: 1.2rem; width: 32px; text-align: center; }
+
+  .about-visual {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 36px; position: relative; overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px; width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(155,93,229,0.25), transparent 70%);
+    border-radius: 50%;
+  }
+  .stat-big { margin-bottom: 28px; }
+  .stat-big .num {
+    font-family: 'Poppins', sans-serif; font-weight: 800;
+    font-size: 3rem; line-height: 1;
+    background: linear-gradient(135deg, var(--accent2), var(--accent3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-big .label { font-size: 0.8rem; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+  .about-org-list {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px;
+  }
+  .about-org-chip {
+    font-size: 0.65rem; padding: 3px 10px; background: rgba(155,93,229,0.12);
+    border: 1px solid var(--border); border-radius: 50px; color: var(--text2);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center; padding: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text3); font-size: 0.78rem; letter-spacing: 1px;
+  }
+  footer span { color: var(--accent2); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links a { padding: 6px 12px; font-size: 0.75rem; }
+    .hero { padding: 100px 20px 60px; }
+    .about-inner { grid-template-columns: 1fr; }
+    .result-body { grid-template-columns: 1fr; }
+    .skin-preview { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+    #result-section, #browse, #about { padding-left: 20px; padding-right: 20px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .skins-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">BPS<span>kins</span></div>
+  <div class="nav-links">
+    <a href="#hero" class="active">Início</a>
+    <a href="#browse">Catálogo</a>
+    <a href="#about">Sobre</a>
+  </div>
+  <button id="theme-btn" title="Alternar tema">🌙 <span id="theme-label"></span></button>
+</nav>
+
+<!-- HERO / SEARCH -->
+<section class="hero" id="hero">
+  <h1>Encontre<br>qualquer Skin</h1>
+
+  <div class="search-container">
+    <div class="search-box">
+      <input type="number" id="search-input" placeholder="Digite o ID da skin... ex: 107" min="1" max="320" />
+      <button onclick="searchSkin()">Buscar</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-pill"><strong id="stat-total">0</strong> skins cadastradas</div>
+    <div class="stat-pill"><strong id="stat-orgs">0</strong> organizações</div>
+    <div class="stat-pill"><strong id="stat-emp">0</strong> empregos</div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="result-section"></section>
+
+<!-- BROWSE -->
+<section id="browse">
+  <h2 class="section-title">Catálogo Completo</h2>
+  <p class="section-sub">Clique em qualquer skin para ver seus detalhes</p>
+
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterSkins('all', this)">Todas</button>
+    <button class="filter-tab" onclick="filterSkins('ORG', this)">Organizações</button>
+    <button class="filter-tab" onclick="filterSkins('EMPREGO', this)">Empregos</button>
+    <button class="filter-tab" onclick="filterSkins('LOJA DE ROUPAS', this)">Loja de Roupas</button>
+  </div>
+
+  <div class="skins-grid" id="skins-grid"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner" style="grid-template-columns:1fr;max-width:860px;">
+
+    <!-- INTRO -->
+    <div class="about-text" style="text-align:center;">
+      <h2 class="section-title">Sobre o Projeto</h2>
+      <p style="max-width:600px;margin:0 auto 12px;">
+        O <strong style="color:var(--accent2)">BPSkins</strong> é um buscador visual de skins para o servidor do <strong style="color:var(--accent2)">Brasil PlayShox</strong>. Desenvolvido para facilitar a vida de jogadores e administradores.
+      </p>
+      <p style="max-width:600px;margin:0 auto;">
+        O Projeto foi criado com o intuito de auxiliar os jogadores do servidor do <strong style="color:var(--accent2)">Brasil PlayShox</strong>   em suas negociações ou dúvidas sobre as skins presentes no servidor. A idealização do mesmo não teve patrocínio da administração do servidor ou qualquer outro fim lucrativo; portanto, ele é um projeto OPEN-SOURCE! mantido por jogadores que apoiam e acompanham o servidor..
+      </p>
+    </div>
+
+    <!-- STATS ROW -->
+    <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+      <div class="about-visual" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+        <div class="stat-big">
+          <div class="num" id="about-total">0</div>
+          <div class="label">Skins cadastradas</div>
+        </div>
+      </div>  
+    </div>
+
+    <!-- CREDITS -->
+    <div class="about-visual" style="margin-top:0;">
+      <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;
+                  color:var(--accent3);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.3rem;"></span> Autores &amp; Contribuintes
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:28px;">
+        <div class="about-feat">
+          <span class="icon"></span>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">Shazanxz</div>
+            <div style="font-size:0.75rem;color:var(--text3);margin-top:2px;">Desenvolvedor</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <span class="icon"></span>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">May</div>
+            <div style="font-size:0.75rem;color:var(--text3);margin-top:2px;">Inspiração — SkinsShox.pdf</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <span class="icon"></span>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">Sanmy</div>
+            <div style="font-size:0.75rem;color:var(--text3);margin-top:2px;">Mapeação das Skins</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <span class="icon"></span>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">Rickw</div>
+            <div style="font-size:0.75rem;color:var(--text3);margin-top:2px;">Mapeação das Skins</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <span class="icon"></span>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">DanielSks</div>
+            <div style="font-size:0.75rem;color:var(--text3);margin-top:2px;">Mapeação das Skins</div>
+          </div>
+        </div>
+        <div class="about-feat">
+          <span class="icon"></span>
+          <div>
+            <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">TheShadown</div>
+            <div style="font-size:0.75rem;color:var(--text3);margin-top:2px;">Organização das Imagens / Preview</div>
+          </div>
+        </div>
+
+      </div>
+      <div style="
+        background:linear-gradient(135deg,rgba(123,47,255,0.18),rgba(6,214,160,0.08));
+        border:1px solid rgba(6,214,160,0.25);
+        border-radius:14px;padding:20px 24px;
+        display:flex;align-items:flex-start;gap:14px;">
+        <span style="font-size:2rem;line-height:1;">❤️</span>
+        <div>
+          <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:0.9rem;
+                      color:var(--cyan);margin-bottom:6px;">Agradecimento Especial — Open-MP</div>
+          <div style="font-size:0.82rem;color:var(--text2);line-height:1.65;">
+            Nossos sinceros agradecimentos à equipe do
+            <a href="https://open.mp/" target="_blank" rel="noopener"
+               style="color:var(--accent2);text-decoration:none;font-weight:600;
+                      border-bottom:1px solid rgba(155,93,229,0.4);
+                      transition:border-color .2s;"
+               onmouseover="this.style.borderColor='var(--accent2)'"
+               onmouseout="this.style.borderColor='rgba(155,93,229,0.4)'">Open-MP</a>
+            que forneceu todo o guia e imagens em alta qualidade para o projeto!
+            <strong style="color:var(--cyan);">Obrigado OpenMP!</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>Feito com <span>♥</span> · <span>Shazanxz</span> · Todos os direitos reservados</p>
+</footer>
+
+<script>
+// ─── DATABASE ───────────────────────────────────────────────────────────────
+const DB = {
+  107: {modelo:"Groove com Bone", cat:"ORG", org_nome:"GROOVE STREET", cargo:"Cargo 1", modelsa:"fam3"},
+  105: {modelo:"Groove com Bandana", cat:"ORG", org_nome:"GROOVE STREET", cargo:"Cargo 2", modelsa:"fam1"},
+  106: {modelo:"Groove com Camisa Xadrez", cat:"ORG", org_nome:"GROOVE STREET", cargo:"Cargo 3", modelsa:"fam2"},
+  195: {modelo:"Groove Feminina", cat:"ORG", org_nome:"GROVE STREET", cargo:"-", modelsa:"wfygraf"},
+  271: {modelo:"Ryder", cat:"ORG", org_nome:"GROOVE STREET", cargo:"Cargo 4", modelsa:"ryder"},
+  269: {modelo:"BigSmoke", cat:"ORG", org_nome:"GROOVE STREET", cargo:"Sublider 1 e 2", modelsa:"smoke"},
+  270: {modelo:"Sweet", cat:"ORG", org_nome:"GROOVE STREET", cargo:"Lider", modelsa:"sweet"},
+  102: {modelo:"Ballas com bandana", cat:"ORG", org_nome:"BALLAS", cargo:"Cargo 1 e 2", modelsa:"ballas1"},
+  103: {modelo:"Ballas com jaqueta preta", cat:"ORG", org_nome:"BALLAS", cargo:"Cargo 3 e 4", modelsa:"ballas2"},
+  104: {modelo:"Ballas com touca preta", cat:"ORG", org_nome:"BALLAS", cargo:"Sublider e Lider", modelsa:"ballas3"},
+  13:  {modelo:"Ballas Feminina", cat:"ORG", org_nome:"BALLAS", cargo:"-", modelsa:"bfyri"},
+  109: {modelo:"Vagos com bandana", cat:"ORG", org_nome:"LOS VAGOS", cargo:"Cargo 1 e 2", modelsa:"lsv2"},
+  110: {modelo:"Vagos com chinelo", cat:"ORG", org_nome:"LOS VAGOS", cargo:"Cargo 3 e 4", modelsa:"lsv3"},
+  108: {modelo:"Vagos sem camisa", cat:"ORG", org_nome:"LOS VAGOS", cargo:"Sublider 1 e 2 e Lider", modelsa:"lsv1"},
+  215: {modelo:"Vagos Feminina", cat:"ORG/EMPREGO MOTORISTA DE ONIBUS", org_nome:"LOS VAGOS", cargo:"-", modelsa:"vbfycr"},
+  114: {modelo:"Azteca com bandana", cat:"ORG", org_nome:"LOS AZTECAS", cargo:"Cargo 1", modelsa:"vla1"},
+  116: {modelo:"Azteca com blusa branca", cat:"ORG", org_nome:"LOS AZTECAS", cargo:"Cargo 2", modelsa:"vla3"},
+  174: {modelo:"Azteca com colete", cat:"ORG", org_nome:"LOS AZTECAS", cargo:"Cargo 3", modelsa:"sbmotr2"},
+  173: {modelo:"Azteca com chapeuzinho", cat:"ORG", org_nome:"LOS AZTECAS", cargo:"Cargo 4", modelsa:"sbmotr1"},
+  115: {modelo:"Azteca com bone para tras", cat:"ORG", org_nome:"LOS AZTECAS", cargo:"Sublider 1, 2 e Lider", modelsa:"vla2"},
+  226: {modelo:"Azteca Feminina", cat:"ORG", org_nome:"LOS AZTECAS", cargo:"-", modelsa:"swfystra"},
+  287: {modelo:"Militar", cat:"ORG", org_nome:"EXERCITO", cargo:"Cargo 1, 2, 3, 4 e Sublideres", modelsa:"army"},
+  73:  {modelo:"Militar com bandana", cat:"ORG", org_nome:"EXERCITO", cargo:"Lider", modelsa:"jizzy"},
+  191: {modelo:"Militar Feminina", cat:"ORG", org_nome:"EXERCITO", cargo:"-", modelsa:"wfygaer"},
+  285: {modelo:"Swat", cat:"ORG", org_nome:"BOPE/ROTA/PRF", cargo:"Cargo 1, 2, 3, 4", modelsa:"swat"},
+  240: {modelo:"Homem com colete", cat:"ORG", org_nome:"BOPE/ROTA/POLICIA CIVIL", cargo:"Sublideres", modelsa:"swmyhp2"},
+  171: {modelo:"Homem com gravata borboleta", cat:"ORG", org_nome:"BOPE/ROTA", cargo:"Lider", modelsa:"jethro"},
+  307: {modelo:"Policial Feminina", cat:"ORG", org_nome:"BOPE/ROTA", cargo:"-", modelsa:"lapdfy1"},
+  177: {modelo:"Homem com blusa azul claro", cat:"ORG", org_nome:"PCC", cargo:"Cargo 1, 2, 3, 4 e Sublideres", modelsa:"sbmytr3"},
+  143: {modelo:"Homem com jaqueta azul claro", cat:"ORG", org_nome:"PCC", cargo:"Lider", modelsa:"cwmyfr"},
+  286: {modelo:"Oficial FBI", cat:"ORG", org_nome:"POLICIA FEDERAL", cargo:"Cargo 1, 2, 3, 4", modelsa:"fbi"},
+  185: {modelo:"Oficial Camisa Listrada", cat:"ORG", org_nome:"POLICIA FEDERAL E POLICIA CIVIL", cargo:"Sublideres", modelsa:"swmyri"},
+  295: {modelo:"Homem com gravata vermelha", cat:"ORG", org_nome:"POLICIA FEDERAL", cargo:"Lider", modelsa:"fwmyst"},
+  224: {modelo:"Policial Feminina com camisa de oncinha", cat:"ORG", org_nome:"POLICIA FEDERAL", cargo:"-", modelsa:"swfystr"},
+  280: {modelo:"Policial Simples", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"Cargo 1", modelsa:"lapd1"},
+  281: {modelo:"Policial com Bigode", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"Cargo 2", modelsa:"sfpd1"},
+  282: {modelo:"Policial com Farda Clara", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"Cargo 3", modelsa:"lvpd1"},
+  288: {modelo:"Policial com Farda e Chapeu Claro", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"Cargo 4", modelsa:"csher"},
+  266: {modelo:"Pulanski", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"Sublideres", modelsa:"pulaski"},
+  267: {modelo:"Tenpenny", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"Lider", modelsa:"tenpen"},
+  306: {modelo:"Policia Feminina", cat:"ORG", org_nome:"POLICIA MILITAR", cargo:"-", modelsa:"lapdfy2"},
+  290: {modelo:"Homem com jaqueta preta e oculos", cat:"ORG", org_nome:"PRF", cargo:"Sublideres", modelsa:"rose"},
+  227: {modelo:"Velho com terno", cat:"ORG", org_nome:"PRF e GLOBO", cargo:"Lider / Sublider e Lider GLOBO", modelsa:"swmotr2"},
+  298: {modelo:"Policial Feminina", cat:"ORG", org_nome:"PRF", cargo:"-", modelsa:"vbfystp"},
+  275: {modelo:"Medico Pardo", cat:"ORG", org_nome:"Medico", cargo:"Cargo 1 e 2", modelsa:"lvemt1"},
+  276: {modelo:"Medico Branco", cat:"ORG", org_nome:"Medico", cargo:"Cargo 3", modelsa:"sfemt1"},
+  274: {modelo:"Medico Negro", cat:"ORG", org_nome:"Medico", cargo:"Cargo 4", modelsa:"laemt1"},
+  70:  {modelo:"Medico com jaleco branco", cat:"ORG", org_nome:"Medico", cargo:"Sublideres e Lider", modelsa:"scientist"},
+  163: {modelo:"Seguranca Negro", cat:"ORG", org_nome:"GOVERNO", cargo:"Cargo 1 e 2", modelsa:"bmyboun"},
+  164: {modelo:"Seguranca Branco", cat:"ORG", org_nome:"GOVERNO", cargo:"Cargo 3 e 4", modelsa:"wmyboun"},
+  228: {modelo:"Homem com terno e gravata vermelha", cat:"ORG", org_nome:"GOVERNO", cargo:"Sublideres", modelsa:"somori"},
+  147: {modelo:"Homem com terno cinza", cat:"ORG", org_nome:"GOVERNO", cargo:"Lider", modelsa:"wmybu"},
+  150: {modelo:"Mulher Empresaria", cat:"ORG", org_nome:"GOVERNO/EMPREGO SEGURANÇA", cargo:"-", modelsa:"wfybu"},
+  124: {modelo:"Homem vestido de preto", cat:"ORG", org_nome:"POLICIA CIVIL / AL-QAEDA", cargo:"Cargo 3", modelsa:"vmaff1"},
+  299: {modelo:"Homem de jaqueta/Niko belic", cat:"ORG", org_nome:"POLICIA CIVIL / AL-QAEDA", cargo:"Cargo 4", modelsa:"claude"},
+  186: {modelo:"Homem com terno cinza aberto", cat:"ORG", org_nome:"POLICIA CIVIL / AL-QAEDA", cargo:"Lider", modelsa:"somyri"},
+  141: {modelo:"Japonesa", cat:"ORG", org_nome:"POLICIA CIVIL / AL-QAEDA", cargo:"-", modelsa:"sofybu"},
+  142: {modelo:"Homem com camisa hippie", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"Cargo 2", modelsa:"swmyhp1"},
+  182: {modelo:"Homem Punk", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"Cargo 1", modelsa:"gormy"},
+  193: {modelo:"Mulher com top vermelho", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"-", modelsa:"wfypro"},
+  293: {modelo:"OGLOC / Homem Tatuado sem camisa", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"Cargo 3", modelsa:"ogloc"},
+  22:  {modelo:"Homem com moletom laranja", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"Cargo 4", modelsa:"bmyst"},
+  19:  {modelo:"Homem sem camisa com roupa vermelha", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"Lider", modelsa:"bmydj"},
+  49:  {modelo:"Velho com roupa vermelha e preta", cat:"ORG", org_nome:"COMANDO VERMELHO", cargo:"Sublideres", modelsa:"somyst"},
+  111: {modelo:"Homem com terno", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"Cargo 3", modelsa:"maffa"},
+  208: {modelo:"Japones com terno", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"Cargo 1", modelsa:"suzie"},
+  117: {modelo:"Homem magro com terno", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"Sublideres", modelsa:"triada"},
+  120: {modelo:"Homem com terno acinzentado", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"Lider", modelsa:"triboss"},
+  203: {modelo:"Homem com kimono com faixa vermelha", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"Cargo 2", modelsa:"omykara"},
+  204: {modelo:"Homem com barba e com kimono de faixa vermelha", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"Cargo 4", modelsa:"wmykara"},
+  169: {modelo:"Mulher com vestido preto", cat:"ORG", org_nome:"MAFIA YAKUZA", cargo:"-", modelsa:"sofyri"},
+  126: {modelo:"Homem com camisa longa azul", cat:"ORG", org_nome:"MAFIA CN", cargo:"Cargo 4", modelsa:"vbi"},
+  113: {modelo:"Homem com barba e com smoking cinza", cat:"ORG", org_nome:"MAFIA CN", cargo:"Lider", modelsa:"maffb"},
+  43:  {modelo:"Homem com camisa lilas e oculos", cat:"ORG", org_nome:"MAFIA CN", cargo:"Sublideres", modelsa:"hmyst"},
+  192: {modelo:"Mulher com regata", cat:"ORG", org_nome:"MAFIA CN", cargo:"-", modelsa:"wfyjg"},
+  223: {modelo:"Homem com camisa longa rosa", cat:"ORG", org_nome:"MAFIA CN", cargo:"Cargo 2 e 3", modelsa:"sbmyst"},
+  46:  {modelo:"Homem com camisa longa branca", cat:"ORG", org_nome:"MAFIA CN", cargo:"Cargo 1", modelsa:"hmyri"},
+  83:  {modelo:"Homem com roupa branca / Elvis Branco", cat:"ORG", org_nome:"MAFIA MEXICANA", cargo:"Cargo 1, 2, 3, 4", modelsa:"vhmycl"},
+  84:  {modelo:"Homem com roupa azul / Elvis Azul", cat:"ORG", org_nome:"MAFIA MEXICANA", cargo:"Sublideres e Lider", modelsa:"vbmycl"},
+  64:  {modelo:"Mulher com roupa curta", cat:"ORG", org_nome:"MAFIA MEXICANA", cargo:"-", modelsa:"vfyshere"},
+  77:  {modelo:"Mulher com chapeu grande rosa e desarrumada", cat:"ORG", org_nome:"MAFIA RUSSA e EMPREGO LIXEIRO FEMININA", cargo:"-", modelsa:"swmotr1"},
+  206: {modelo:"Homem com blusa verde", cat:"ORG", org_nome:"MAFIA RUSSA / MAYANS", cargo:"Sublideres e Lider", modelsa:"vwmycd"},
+  121: {modelo:"Homem careca com blusa branca", cat:"ORG", org_nome:"TALIBAN", cargo:"Cargo 1, 3", modelsa:"da_nanh"},
+  249: {modelo:"Homem com sobretudo com pelo e chapeu", cat:"ORG", org_nome:"TALIBAN", cargo:"Sublideres e Lider", modelsa:"pimp"},
+  112: {modelo:"Homem com casaco", cat:"ORG", org_nome:"TALIBAN", cargo:"Cargo 2", modelsa:"maffa"},
+  131: {modelo:"Mulher com blusa marrom", cat:"ORG", org_nome:"TALIBAN", cargo:"-", modelsa:"wfypt"},
+  122: {modelo:"Homem com blusa preta e touca preta", cat:"ORG", org_nome:"TALIBAN", cargo:"Cargo 4", modelsa:"da_glsh"},
+  247: {modelo:"Motoqueiro", cat:"ORG", org_nome:"SONS OF ANARCHY", cargo:"Cargo 1, 2, 3, 4", modelsa:"bikera"},
+  248: {modelo:"Motoqueiro com bandana na cabeca", cat:"ORG", org_nome:"SONS OF ANARCHY", cargo:"Sublideres", modelsa:"bikerb"},
+  100: {modelo:"Motoqueiro com oculos", cat:"ORG", org_nome:"SONS OF ANARCHY", cargo:"Lider", modelsa:"wmycr"},
+  238: {modelo:"Mulher semi nua com roupa vermelha", cat:"ORG", org_nome:"SONS OF ANARCHY", cargo:"-", modelsa:"sbfypro"},
+  132: {modelo:"Velho Motoqueiro", cat:"ORG", org_nome:"MAYANS", cargo:"Cargo 3", modelsa:"somyst"},
+  291: {modelo:"Homem de Jaqueta Jeans", cat:"ORG", org_nome:"MAYANS", cargo:"Cargo 4", modelsa:"truth"},
+  242: {modelo:"Gordo com camisa branca", cat:"ORG", org_nome:"MAYANS", cargo:"Sublideres", modelsa:"swmyhp3"},
+  241: {modelo:"Gordo com camisa preta", cat:"ORG", org_nome:"MAYANS", cargo:"Lider", modelsa:"skmyhp1"},
+  201: {modelo:"Caminhoneira", cat:"ORG", org_nome:"MAYANS", cargo:"-", modelsa:"wfytruck"},
+  166: {modelo:"Homem de terno negro", cat:"ORG", org_nome:"HITMANS/TRIADS", cargo:"Cargo 1, 2 | ate Cargo 4 Triads", modelsa:"vbmyst"},
+  165: {modelo:"Homem branco de terno", cat:"ORG", org_nome:"HITMANS", cargo:"Cargo 3, 4", modelsa:"vwmyst"},
+  127: {modelo:"Homem com jaqueta marrom", cat:"ORG", org_nome:"HITMANS/TRIADS", cargo:"Sublideres", modelsa:"triboss"},
+  294: {modelo:"Woozie", cat:"ORG", org_nome:"HITMANS/TRIADS", cargo:"Lider", modelsa:"woozie"},
+  93:  {modelo:"Mulher de blusa preta e calca jeans", cat:"ORG", org_nome:"HITMANS/TRIADS", cargo:"-", modelsa:"wfypro"},
+  188: {modelo:"Homem de blusa verde", cat:"ORG", org_nome:"GLOBO", cargo:"Cargo 1, 2", modelsa:"surly"},
+  156: {modelo:"Velho de blusa azul / Barbeiro do CJ", cat:"ORG", org_nome:"GLOBO", cargo:"Cargo 3, 4", modelsa:"bmdibi"},
+  148: {modelo:"Mulher casual azul", cat:"ORG", org_nome:"GLOBO", cargo:"-", modelsa:"wfylve"},
+  // EMPREGOS
+  155: {modelo:"PizzaBoy", cat:"EMPREGO", modelsa:"wmypizz"},
+  205: {modelo:"PizzaGirl", cat:"EMPREGO", modelsa:"wfyburg"},
+  71:  {modelo:"Agente Penitenciario", cat:"EMPREGO", modelsa:"wmysgrd"},
+  194: {modelo:"Agente Penitenciaria", cat:"EMPREGO", modelsa:"crogrl3"},
+  133: {modelo:"Caminhoneiro", cat:"EMPREGO", modelsa:"dnmolc2"},
+  232: {modelo:"Caminhoneira", cat:"EMPREGO", modelsa:"wfytruck"},
+  20:  {modelo:"Motorista de Onibus", cat:"EMPREGO", modelsa:"bmyri"},
+  61:  {modelo:"Taxista", cat:"EMPREGO", modelsa:"wmyplt"},
+  40:  {modelo:"Taxista - Feminina", cat:"EMPREGO", modelsa:"hfyri"},
+  263: {modelo:"Vendedora de produtos", cat:"EMPREGO", modelsa:"vwfywa2"},
+  28: {modelo: "Ladrão de Carros", cat:"EMPREGO", modelsa:"wmycar"},
+  260: {modelo:"Lixeiro", cat:"EMPREGO", modelsa:"bmycon"},
+  158: {modelo:"Fazendeiro", cat:"EMPREGO", modelsa:"cwmofr"},
+  68:  {modelo:"Coveiro", cat:"EMPREGO", modelsa:"wmoprea"},
+  98:  {modelo:"Carteiro", cat:"EMPREGO", modelsa:"wmyri"},
+  16:  {modelo:"Eletricista", cat:"EMPREGO", modelsa:"bmyap"},
+  233: {modelo:"Eletricista Feminina", cat:"EMPREGO", modelsa:"wfyap"},
+  27:  {modelo:"Operario de Construção", cat:"EMPREGO", modelsa:"wmycon"},
+  187: {modelo:"Advogado", cat:"EMPREGO", modelsa:"somybu"},
+  76:  {modelo:"Advogada", cat:"EMPREGO", modelsa:"wfystew"},
+  // LOJA
+  160: {modelo:"Caipira", cat:"LOJA DE ROUPAS", modelsa:"cwmohb2"},
+  2:   {modelo:"Maccer", cat:"LOJA DE ROUPAS", modelsa:"maccer"},
+  1:   {modelo:"The Truth", cat:"LOJA DE ROUPAS", modelsa:"truth"},
+  196: {modelo:"Habitante Rural", cat:"LOJA DE ROUPAS", modelsa:"cwfofr"},
+  214: {modelo:"Garçonete (Maria Latore)", cat:"LOJA DE ROUPAS", modelsa:"vwfywai"},
+  198: {modelo:"Habitante Rural Feminina", cat:"LOJA DE ROUPAS/EMPREGO FAZENDEIRO", modelsa:"cwfyfr1"},
+  140: {modelo:"Visitante de Praia Feminina", cat:"LOJA DE ROUPAS", modelsa:"hfybe"},
+  138: {modelo:"Visitante de Praia Feminina 2", cat:"LOJA DE ROUPAS", modelsa:"wfybe"},
+  41:  {modelo:"Pedestre Comum Feminina", cat:"LOJA DE ROUPAS", modelsa:"hfyst"},
+  56:  {modelo:"Pedestre Comum Feminina 2 e Feminina Medicos", cat:"LOJA DE ROUPAS", modelsa:"ofyst"},
+  38:  {modelo:"Pedestre Comum Feminina 3", cat:"LOJA DE ROUPAS", modelsa:"hfori"},
+  31:  {modelo:"Habitante de Vila Feminina", cat:"LOJA DE ROUPAS", modelsa:"dwfolc"},
+  12:  {modelo:"Mulher Rica", cat:"LOJA DE ROUPAS", modelsa:"bfyri"},
+  11:  {modelo:"Crupie de Cassino", cat:"LOJA DE ROUPAS", modelsa:"vbfycrp"},
+  297: {modelo:"Madd Dogg", cat:"LOJA DE ROUPAS", modelsa:"maddogg"},
+  292: {modelo:"Cesar Vialpando", cat:"LOJA DE ROUPAS", modelsa:"cesar"},
+  289: {modelo:"Zero", cat:"LOJA DE ROUPAS", modelsa:"zero"},
+  259: {modelo:"Espectador 2", cat:"LOJA DE ROUPAS", modelsa:"heck2"},
+  258: {modelo:"Espectador 1", cat:"LOJA DE ROUPAS", modelsa:"heck1"},
+  159: {modelo:"Caipira de Macacão", cat:"LOJA DE ROUPAS", modelsa:"cwmohb1"},
+  21:  {modelo:"Pedestre Afro-americano (Casual)", cat:"LOJA DE ROUPAS", modelsa:"bmyst"},
+  7:   {modelo:"Pedestre Casual", cat:"LOJA DE ROUPAS", modelsa:"bmyst"},
+  170: {modelo:"Pedestre Comum", cat:"LOJA DE ROUPAS", modelsa:"somyst"},
+  180: {modelo:"Tatuador", cat:"LOJA DE ROUPAS", modelsa:"bmytatt"},
+  221: {modelo:"Pedestre Masculino", cat:"LOJA DE ROUPAS", modelsa:"sbmori"},
+  222: {modelo:"Pedestre Masculino 2", cat:"LOJA DE ROUPAS", modelsa:"sbmost"},
+  230: {modelo:"Morador de Rua", cat:"LOJA DE ROUPAS", modelsa:"swmotr5"},
+  250: {modelo:"Pedestre Comum Masculino", cat:"LOJA DE ROUPAS", modelsa:"swmycr"},
+  252: {modelo:"Manobrista Nu", cat:"LOJA DE ROUPAS", modelsa:"wmyva2"},
+  97:  {modelo:"Salva-vidas", cat:"LOJA DE ROUPAS", modelsa:"wmylg"},
+  99:  {modelo:"Patinador", cat:"LOJA DE ROUPAS", modelsa:"wmyro"},
+  119: {modelo:"Johnny Sindacco", cat:"LOJA DE ROUPAS", modelsa:"sindaco"},
+  14:  {modelo:"Pedestre Afro-americano", cat:"LOJA DE ROUPAS", modelsa:"bmori"},
+  29:  {modelo:"Traficante (San Fierro)", cat:"LOJA DE ROUPAS", modelsa:"wmydrug"},
+  35:  {modelo:"Jardineiro", cat:"LOJA DE ROUPAS", modelsa:"hmogar"},
+  36:  {modelo:"Jogador de Golfe 1", cat:"LOJA DE ROUPAS", modelsa:"wmygol1"},
+  37:  {modelo:"Jogador de Golfe 2", cat:"LOJA DE ROUPAS", modelsa:"wmygol2"},
+  58:  {modelo:"Pedestre Oriental", cat:"LOJA DE ROUPAS", modelsa:"omost"},
+  60:  {modelo:"Pedestre Oriental 2", cat:"LOJA DE ROUPAS", modelsa:"omyst"},
+  62:  {modelo:"Coronel Fuhrberger", cat:"LOJA DE ROUPAS", modelsa:"wmopj"},
+  67:  {modelo:"Jogador de Bilhar", cat:"LOJA DE ROUPAS", modelsa:"bmypol2"},
+  86:  {modelo:"Ryder (Mascara de Roubo)", cat:"LOJA DE ROUPAS", modelsa:"ryder3"},
+  95:  {modelo:"Funcionário de Posto", cat:"LOJA DE ROUPAS", modelsa:"wmost"},
+  96:  {modelo:"Corredor (Jogging)", cat:"LOJA DE ROUPAS", modelsa:"wmyjg"},
+  3:   {modelo:"Andre", cat:"LOJA DE ROUPAS", modelsa:"andre"},
+  23:  {modelo:"Ciclista BMX", cat:"LOJA DE ROUPAS", modelsa:"wmybmx"},
+  4:   {modelo:"Big Bear (Magro)", cat:"LOJA DE ROUPAS", modelsa:"bbthin"},
+  26:  {modelo:"Mochileiro", cat:"LOJA DE ROUPAS", modelsa:"wmybp"},
+
+// OUTRAS
+0:   {modelo:"CJ (Carl Johnson)", modelsa:"cj"},
+5:   {modelo:"Big Bear (Gordo)", modelsa:"bb"},
+6:   {modelo:"Emmet", modelsa:"emmet"},
+8:   {modelo:"Zelador / Janitor", modelsa:"janitor"},
+9:   {modelo:"Pedestre Feminina Negra", modelsa:"bfori"},
+10:  {modelo:"Mulher Velha", modelsa:"bfost"},
+15:  {modelo:"Mr. Whittaker", modelsa:"bmost"},
+17:  {modelo:"Homem de Negócios Negro", modelsa:"bmybu"},
+18:  {modelo:"Visitante de Praia Negro", modelsa:"bmybe"},
+24:  {modelo:"Guarda-costas do Madd Dogg 1", modelsa:"wbdyg1"},
+25:  {modelo:"Guarda-costas do Madd Dogg 2", modelsa:"wbdyg2"},
+30:  {modelo:"Traficante (Las Venturas)", modelsa:"hmydrug"},
+32:  {modelo:"Habitante Rural Masculino", modelsa:"dwmolc1"},
+33:  {modelo:"Habitante Rural Masculino 2", modelsa:"dwmolc2"},
+34:  {modelo:"Habitante Rural Masculino 3", modelsa:"dwmylc1"},
+39:  {modelo:"Pedestre Feminina 4", modelsa:"hfost"},
+42:  {modelo:"Jethro", modelsa:"jethro"},
+44:  {modelo:"Pedestre Masculino Oriental", modelsa:"hmost"},
+45:  {modelo:"Visitante de Praia Oriental", modelsa:"hmybe"},
+47:  {modelo:"Pedestre Masculino Oriental 2", modelsa:"hmycr"},
+48:  {modelo:"Pedestre Masculino Oriental 3", modelsa:"hmyst"},
+50:  {modelo:"Mecânico", modelsa:"wmymech"},
+51:  {modelo:"Ciclista de Montanha Negro", modelsa:"bmymoun"},
+52:  {modelo:"Ciclista de Montanha Branco", modelsa:"wmymoun"},
+53:  {modelo:"Pedestre Feminina Oriental", modelsa:"ofori"},
+54:  {modelo:"Pedestre Feminina Oriental 2", modelsa:"ofost"},
+55:  {modelo:"Pedestre Feminina Oriental 3", modelsa:"ofyri"},
+57:  {modelo:"Pedestre Masculino Oriental 3", modelsa:"omori"},
+59:  {modelo:"Pedestre Masculino Oriental 4", modelsa:"omyri"},
+63:  {modelo:"Prostituta Negra", modelsa:"bfypro"},
+65:  {modelo:"Kendl Johnson", modelsa:"kendl"},
+66:  {modelo:"Jogador de Bilhar 1", modelsa:"bmypol1"},
+69:  {modelo:"Pedestre Feminina Mestiça", modelsa:"sbfyst"},
+72:  {modelo:"Hippie Masculino", modelsa:"swmyhp1"},
+75:  {modelo:"Prostituta", modelsa:"swfopro"},
+78:  {modelo:"Morador de Rua Branco", modelsa:"wmotr1"},
+79:  {modelo:"Morador de Rua Negro", modelsa:"bmotr1"},
+80:  {modelo:"Boxeador Negro", modelsa:"vbmybox"},
+81:  {modelo:"Boxeador Branco", modelsa:"vwmybox"},
+82:  {modelo:"Elvis Negro", modelsa:"vhmyelv"},
+85:  {modelo:"Prostituta Branca (LV)", modelsa:"vwfypro"},
+87:  {modelo:"Stripper Branca", modelsa:"vwfyst1"},
+88:  {modelo:"Pedestre Feminina Branca", modelsa:"wfori"},
+89:  {modelo:"Pedestre Feminina Branca 2", modelsa:"wfost"},
+90:  {modelo:"Corredora Branca", modelsa:"wfyjg"},
+91:  {modelo:"Mulher Rica Branca", modelsa:"wfyri"},
+92:  {modelo:"Patinadora Branca", modelsa:"wfyro"},
+94:  {modelo:"Pedestre Masculino Branco", modelsa:"wmori"},
+101: {modelo:"Pedestre Masculino Branco 2", modelsa:"wmyst"},
+118: {modelo:"Triad 2", modelsa:"triadb"},
+123: {modelo:"Da Nang Boy 3", modelsa:"dnb3"},
+125: {modelo:"Máfia (LV) 2", modelsa:"vmaff2"},
+128: {modelo:"Habitante Rural Mestiço", modelsa:"dnmylc"},
+129: {modelo:"Habitante Rural Feminina Mestiça", modelsa:"dnfolc1"},
+130: {modelo:"Habitante Rural Feminina Mestiça 2", modelsa:"dnfolc2"},
+134: {modelo:"Morador de Rua Mestiço", modelsa:"sbmotr2"},
+135: {modelo:"Morador de Rua Mestiço 2", modelsa:"swmotr2"},
+136: {modelo:"Pedestre Masculino Mestiço", modelsa:"sbmytr3"},
+137: {modelo:"Morador de Rua Mestiço 3", modelsa:"swmotr3"},
+139: {modelo:"Visitante de Praia Feminina Negra", modelsa:"bfybe"},
+144: {modelo:"Homem do Crack", modelsa:"bmycg"},
+145: {modelo:"Mulher do Crack", modelsa:"wfycrk"},
+146: {modelo:"Homem do Crack 2", modelsa:"hmycm"},
+149: {modelo:"Big Smoke Blindado", modelsa:"smokev"},
+151: {modelo:"Pedestre Feminina Rural", modelsa:"dwfylc1"},
+152: {modelo:"Prostituta Branca 2", modelsa:"wfypro"},
+153: {modelo:"Operário de Construção 2", modelsa:"wmyconb"},
+154: {modelo:"Visitante de Praia Masculino", modelsa:"wmybe"},
+157: {modelo:"Caipira Feminina", modelsa:"cwfyhb"},
+161: {modelo:"Fazendeiro 2", modelsa:"cwmyfr"},
+162: {modelo:"Caipira Masculino 3", modelsa:"cwmyhb1"},
+167: {modelo:"Funcionário Cluckin' Bell", modelsa:"wmybell"},
+168: {modelo:"Vendedor de Hotdog", modelsa:"bmochil"},
+172: {modelo:"Crupiê Feminina (Cassino)", modelsa:"vwfycrp"},
+175: {modelo:"San Fierro Rifa 3", modelsa:"sfr3"},
+176: {modelo:"Barbeiro Negro", modelsa:"bmybar"},
+177: {modelo:"Barbeiro Branco", modelsa:"wmybar"},
+178: {modelo:"Mulher de Programa", modelsa:"wfysex"},
+179: {modelo:"Vendedor de Armas (Ammunation)", modelsa:"wmyammo"},
+181: {modelo:"Punk Branco", modelsa:"vwmycr"},
+183: {modelo:"Pedestre Masculino Mestiço 2", modelsa:"vbmycr"},
+184: {modelo:"Pedestre Masculino Mestiço 3", modelsa:"vhmycr"},
+189: {modelo:"Manobrista", modelsa:"wmyva"},
+190: {modelo:"Barbara Schternvart", modelsa:"copgrl3"},
+191: {modelo:"Helena Wankstein", modelsa:"gungrl3"},
+192: {modelo:"Michelle Cannes", modelsa:"mecgrl3"},
+193: {modelo:"Katie Zhan", modelsa:"nurgrl3"},
+197: {modelo:"Caipira Feminina 2", modelsa:"cwfohb"},
+199: {modelo:"Habitante Rural Feminina 3", modelsa:"cwfyfr2"},
+200: {modelo:"Caipira Masculino 4", modelsa:"cwmyhb2"},
+202: {modelo:"Fazendeiro Masculino Mestiço", modelsa:"dwmylc2"},
+207: {modelo:"Prostituta Oriental", modelsa:"vhfypro"},
+209: {modelo:"Vendedor de Macarrão", modelsa:"omonood"},
+210: {modelo:"Instrutor de Barco", modelsa:"omoboat"},
+211: {modelo:"Funcionária de Loja de Roupas", modelsa:"wfyclot"},
+212: {modelo:"Morador de Rua Branco 2", modelsa:"vwmotr1"},
+213: {modelo:"Velhinho Estranho", modelsa:"vwmotr2"},
+216: {modelo:"Pedestre Feminina Mestiça 2", modelsa:"swfyri"},
+217: {modelo:"Funcionário de Loja de Roupas", modelsa:"wmyclot"},
+218: {modelo:"Pedestre Feminina Mestiça 3", modelsa:"sbfost"},
+219: {modelo:"Mulher Rica Mestiça", modelsa:"sbfyri"},
+220: {modelo:"Motorista de Táxi Mestiço", modelsa:"sbmocd"},
+225: {modelo:"Pedestre Feminina Oriental 4", modelsa:"sofost"},
+229: {modelo:"Pedestre Masculino Oriental 5", modelsa:"somost"},
+231: {modelo:"Pedestre Feminina Branca 3", modelsa:"swfori"},
+234: {modelo:"Motorista de Táxi Branco", modelsa:"swmocd"},
+235: {modelo:"Pedestre Masculino Branco 3", modelsa:"swmori"},
+236: {modelo:"Pedestre Masculino Branco 4", modelsa:"swmost"},
+237: {modelo:"Prostituta Oriental 2", modelsa:"shfypro"},
+239: {modelo:"Morador de Rua Branco 3", modelsa:"swmotr4"},
+243: {modelo:"Prostituta 2", modelsa:"sfypro"},
+244: {modelo:"Stripper Negra", modelsa:"vbfyst2"},
+245: {modelo:"Prostituta Negra 2", modelsa:"vbfypro"},
+246: {modelo:"Stripper Oriental", modelsa:"vhfyst3"},
+251: {modelo:"Salva-vidas Feminina", modelsa:"wfylg"},
+253: {modelo:"Motorista de Ônibus Negro", modelsa:"bmosec"},
+254: {modelo:"Traficante Motoqueiro", modelsa:"bikdrug"},
+255: {modelo:"Motorista de Limusine", modelsa:"wmych"},
+256: {modelo:"Stripper Mestiça", modelsa:"sbfystr"},
+257: {modelo:"Stripper Mestiça 2", modelsa:"swfystr"},
+261: {modelo:"Motorista de Táxi Branco 2", modelsa:"wmycd1"},
+262: {modelo:"Motorista de Táxi Negro", modelsa:"bmycd"},
+263: {modelo:"Motorista de Táxi Oriental", modelsa:"omycd"},
+264: {modelo:"Motorista de Táxi Mestiço 2", modelsa:"smycd"},
+265: {modelo:"Motorista de Táxi Feminina", modelsa:"wfycd"},
+268: {modelo:"Motorista de Táxi Feminina 2", modelsa:"vwfycd"},
+272: {modelo:"Mendigo", modelsa:"swmotr6"},
+273: {modelo:"Homeless (0.3d RC5)", modelsa:"wmost2"},
+277: {modelo:"Bombeiro (Los Santos)", modelsa:"lafd1"},
+278: {modelo:"Bombeiro (Las Venturas)", modelsa:"lvfd1"},
+279: {modelo:"Bombeiro (San Fierro)", modelsa:"sffd1"},
+283: {modelo:"Xerife do Condado", modelsa:"csher"},
+284: {modelo:"Policial Motociclista (LSPD)", modelsa:"lapdm1"},
+296: {modelo:"Homem com Gravata Vermelha 2", modelsa:"fwmyst"},
+300: {modelo:"Policial LSPD (sem coldre)", modelsa:"lapdna"},
+301: {modelo:"Policial SFPD (sem coldre)", modelsa:"sfpdna"},
+302: {modelo:"Policial LVPD (sem coldre)", modelsa:"lvpdna"},
+303: {modelo:"Xerife do Condado (sem coldre)", modelsa:"csherna"},
+304: {modelo:"Policial Motociclista (sem coldre)", modelsa:"lapdm1na"},
+305: {modelo:"Agente FBI (sem coldre)", modelsa:"fbina"},
+308: {modelo:"Soldado (sem equipamento)", modelsa:"armyna"},
+309: {modelo:"SWAT (sem equipamento)", modelsa:"swatna"},
+310: {modelo:"Xerife do Deserto", modelsa:"dsher"},
+311: {modelo:"Xerife do Deserto (sem chapéu)", modelsa:"dsherna"},
+};  
+
+// ─── STATS ───────────────────────────────────────────────────────────────────
+function computeStats() {
+  const ids = Object.keys(DB);
+  const orgs = new Set(Object.values(DB).filter(s=>s.cat==='ORG' && s.org_nome).map(s=>s.org_nome));
+  const emps = Object.values(DB).filter(s=>s.cat==='EMPREGO').length;
+  document.getElementById('stat-total').textContent = ids.length;
+  document.getElementById('stat-orgs').textContent = orgs.size;
+  document.getElementById('stat-emp').textContent = emps;
+  document.getElementById('about-total').textContent = ids.length;
+  document.getElementById('about-orgs-count').textContent = orgs.size;
+  const orgList = document.getElementById('about-org-list');
+  [...orgs].forEach(o => {
+    const chip = document.createElement('span');
+    chip.className = 'about-org-chip'; chip.textContent = o;
+    orgList.appendChild(chip);
+  });
+}
+
+// ─── IMAGE HELPER ────────────────────────────────────────────────────────────
+function imgSrc(id) { return `images/${id}.png`; }
+
+function imgEl(id, cls, alt) {
+  const img = document.createElement('img');
+  img.src = imgSrc(id); img.alt = alt || 'Skin';
+  img.className = cls || '';
+  img.onerror = () => { img.style.display='none'; img.nextElementSibling && (img.nextElementSibling.style.display='flex'); };
+  return img;
+}
+
+// ─── SEARCH ──────────────────────────────────────────────────────────────────
+function searchSkin(id) {
+  const rawId = id !== undefined ? id : parseInt(document.getElementById('search-input').value);
+  const sec = document.getElementById('result-section');
+  sec.innerHTML = '';
+  if (!rawId) return;
+
+  const skin = DB[rawId];
+  if (!skin) {
+    sec.innerHTML = `
+      <div class="error-card">
+        <span class="error-icon">🔎</span>
+        <h3>Skin nao encontrada</h3>
+        <p>Nenhuma skin com ID <strong>${rawId}</strong> está cadastrada no banco de dados.</p>
+      </div>`;
+    sec.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+
+  const catBadgeMap = { ORG:'org', EMPREGO:'emp', 'LOJA DE ROUPAS':'loja' };
+  const isOrg = skin.cat === 'ORG';
+
+  sec.innerHTML = `
+    <div class="result-card">
+      <div class="result-header">
+        <span class="result-id-badge">#${rawId}</span>
+        <span class="result-cat">${skin.cat}</span>
+      </div>
+      <div class="result-body">
+        <div class="skin-preview" id="prev-wrap">
+          <div class="no-img" id="prev-noimg" style="display:none">
+            <span class="no-img-icon">👤</span>
+            <span>Sem imagem</span>
+          </div>
+        </div>
+        <div class="skin-info">
+          <div class="skin-name">${skin.modelo}</div>
+          <span class="modelsa-tag">modelsa: ${skin.modelsa}</span>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">ID</div>
+              <div class="info-value highlight">${rawId}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Categoria</div>
+              <div class="info-value">${skin.cat}</div>
+            </div>
+            ${isOrg ? `
+            <div class="info-item">
+              <div class="info-label">Organização</div>
+              <div class="info-value org">${skin.org_nome}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Cargo</div>
+              <div class="info-value cargo">${skin.cargo}</div>
+            </div>` : ''}
+            <div class="info-item">
+              <div class="info-label">Modelo (modelsa)</div>
+              <div class="info-value">${skin.modelsa}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  const wrap = document.getElementById('prev-wrap');
+  const noimg = document.getElementById('prev-noimg');
+  const img = document.createElement('img');
+  img.src = imgSrc(rawId);
+  img.style.cssText = 'max-width:140px;max-height:200px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 8px 24px rgba(155,93,229,0.5));position:relative;z-index:1';
+  img.onerror = () => { img.style.display='none'; noimg.style.display='flex'; };
+  wrap.insertBefore(img, noimg);
+
+  sec.scrollIntoView({behavior:'smooth', block:'start'});
+  document.getElementById('search-input').value = rawId;
+}
+
+// ─── BROWSE GRID ─────────────────────────────────────────────────────────────
+let currentFilter = 'all';
+function filterSkins(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById('skins-grid');
+  grid.innerHTML = '';
+  const entries = Object.entries(DB);
+  const filtered = currentFilter === 'all' ? entries : entries.filter(([,s])=>s.cat===currentFilter);
+  filtered.sort(([a],[b]) => parseInt(a)-parseInt(b));
+
+  filtered.forEach(([id, skin]) => {
+    const catClass = {ORG:'badge-org', EMPREGO:'badge-emp', 'LOJA DE ROUPAS':'badge-loja'}[skin.cat] || 'badge-loja';
+    const card = document.createElement('div');
+    card.className = 'skin-card';
+    card.onclick = () => {
+      document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+      setTimeout(()=>searchSkin(parseInt(id)), 400);
+    };
+
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'skin-card-img';
+
+    const noImgFallback = document.createElement('div');
+    noImgFallback.className = 'no-img-card';
+    noImgFallback.style.display = 'none';
+    noImgFallback.textContent = '👤';
+
+    const img = document.createElement('img');
+    img.src = imgSrc(id);
+    img.alt = skin.modelo;
+    img.onerror = () => { img.style.display='none'; noImgFallback.style.display='flex'; };
+
+    const idBadge = document.createElement('span');
+    idBadge.className = 'skin-card-id'; idBadge.textContent = `#${id}`;
+
+    imgWrap.append(img, noImgFallback, idBadge);
+
+    card.innerHTML = `
+      <div class="skin-card-name">${skin.modelo}</div>
+      <div class="skin-card-badges">
+        <span class="badge-cat ${catClass}">${skin.cat}</span>
+        ${skin.org_nome ? `<span class="badge-cat badge-org" style="font-size:.55rem">${skin.org_nome}</span>`:''}
+      </div>`;
+    card.insertBefore(imgWrap, card.firstChild);
+    grid.appendChild(card);
+  });
+}
+
+// ─── THEME ───────────────────────────────────────────────────────────────────
+const btn = document.getElementById('theme-btn');
+const label = document.getElementById('theme-label');
+let dark = true;
+btn.onclick = () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  btn.firstChild.textContent = dark ? '🌙 ' : '☀️ ';
+  label.textContent = dark ? '' : '';
+};
+
+// ─── ENTER KEY ───────────────────────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchSkin();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+computeStats();
+renderGrid();
+</script>
+</body>
+</html>
