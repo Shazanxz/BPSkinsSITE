@@ -1131,8 +1131,7 @@ function searchSkin(id) {
   document.getElementById('search-input').value = rawId;
 }
 
-// ─── GENDER DETECTION ────────────────────────────────────────────────────────
-// Feminine modelsa prefixes used in SA-MP/SAMP
+// ────────────────────────────────────────────────────────
 const FEMALE_MODELSA_PREFIXES = [
   'wf','bf','hf','of','sf','vwf','vbf','sbf','swf','cwf','omf','dnf'
 ];
@@ -1145,11 +1144,9 @@ const FEMALE_NAME_KEYWORDS = [
 function detectGender(skin) {
   const modelsa = (skin.modelsa || '').toLowerCase();
   const nome    = (skin.modelo  || '').toLowerCase();
-  // Check by modelsa prefix
   for (const p of FEMALE_MODELSA_PREFIXES) {
     if (modelsa.startsWith(p) && modelsa.length > p.length) return 'F';
   }
-  // Check by name keywords
   for (const kw of FEMALE_NAME_KEYWORDS) {
     if (nome.includes(kw)) return 'F';
   }
@@ -1164,7 +1161,6 @@ function filterSkins(cat, btn) {
   currentFilter = cat;
   document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
-  // Show gender sub-tabs for all main categories
   const wrapper = document.getElementById('gender-tabs-wrapper');
   wrapper.classList.add('visible');
   renderGrid();
@@ -1182,7 +1178,6 @@ function renderGrid() {
   grid.innerHTML = '';
   const entries = Object.entries(DB);
   let filtered = currentFilter === 'all' ? entries : entries.filter(([,s])=>s.cat===currentFilter);
-  // Apply gender filter
   if (currentGender !== 'all') {
     filtered = filtered.filter(([,s]) => detectGender(s) === currentGender);
   }
