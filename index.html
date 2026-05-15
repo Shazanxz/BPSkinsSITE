@@ -362,6 +362,38 @@
     border-color: transparent; color: #fff;
   }
 
+  /* gender sub-tabs */
+  .gender-tabs-wrapper {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease, margin 0.35s ease;
+    margin-bottom: 0;
+  }
+  .gender-tabs-wrapper.visible {
+    max-height: 80px;
+    opacity: 1;
+    margin-bottom: 20px;
+  }
+  .gender-tabs {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+    padding: 10px 0 4px;
+  }
+  .gender-tab {
+    padding: 6px 18px; border-radius: 50px;
+    font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.5px; cursor: pointer;
+    border: 1px solid var(--border2); background: var(--surface2); color: var(--text2);
+    transition: all var(--transition); display: flex; align-items: center; gap: 6px;
+  }
+  .gender-tab:hover { border-color: var(--accent2); color: var(--accent3); }
+  .gender-tab.active {
+    background: linear-gradient(135deg, rgba(155,93,229,0.35), rgba(123,47,255,0.25));
+    border-color: var(--accent2); color: var(--accent3);
+    box-shadow: 0 0 12px rgba(155,93,229,0.25);
+  }
+  .gender-tab .g-icon { font-size: 0.85rem; }
+
   /* grid */
   .skins-grid {
     display: grid;
@@ -547,6 +579,15 @@
     <button class="filter-tab" onclick="filterSkins('ORG', this)">Organizações</button>
     <button class="filter-tab" onclick="filterSkins('EMPREGO', this)">Empregos</button>
     <button class="filter-tab" onclick="filterSkins('LOJA DE ROUPAS', this)">Loja de Roupas</button>
+  </div>
+
+  <!-- Gender sub-tabs (shown for Todas, ORG, EMPREGO, LOJA DE ROUPAS) -->
+  <div class="gender-tabs-wrapper visible" id="gender-tabs-wrapper">
+    <div class="gender-tabs">
+      <button class="gender-tab active" onclick="filterGender('all', this)"><span class="g-icon">⚥</span> Todas</button>
+      <button class="gender-tab" onclick="filterGender('M', this)"><span class="g-icon">♂</span> Masculina</button>
+      <button class="gender-tab" onclick="filterGender('F', this)"><span class="g-icon">♀</span> Feminina</button>
+    </div>
   </div>
 
   <div class="skins-grid" id="skins-grid"></div>
@@ -1090,11 +1131,48 @@ function searchSkin(id) {
   document.getElementById('search-input').value = rawId;
 }
 
+// ─── GENDER DETECTION ────────────────────────────────────────────────────────
+// Feminine modelsa prefixes used in SA-MP/SAMP
+const FEMALE_MODELSA_PREFIXES = [
+  'wf','bf','hf','of','sf','vwf','vbf','sbf','swf','cwf','omf','dnf'
+];
+const FEMALE_NAME_KEYWORDS = [
+  'feminina','feminino','mulher','girl','garçonete','garconete','senhora',
+  'policial feminina','caminhoneira','advogada','eletricista feminina',
+  'vendedora','taxista - feminina','pizzagirl','agente penitenciaria'
+];
+
+function detectGender(skin) {
+  const modelsa = (skin.modelsa || '').toLowerCase();
+  const nome    = (skin.modelo  || '').toLowerCase();
+  // Check by modelsa prefix
+  for (const p of FEMALE_MODELSA_PREFIXES) {
+    if (modelsa.startsWith(p) && modelsa.length > p.length) return 'F';
+  }
+  // Check by name keywords
+  for (const kw of FEMALE_NAME_KEYWORDS) {
+    if (nome.includes(kw)) return 'F';
+  }
+  return 'M';
+}
+
 // ─── BROWSE GRID ─────────────────────────────────────────────────────────────
 let currentFilter = 'all';
+let currentGender = 'all';
+
 function filterSkins(cat, btn) {
   currentFilter = cat;
   document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  // Show gender sub-tabs for all main categories
+  const wrapper = document.getElementById('gender-tabs-wrapper');
+  wrapper.classList.add('visible');
+  renderGrid();
+}
+
+function filterGender(gender, btn) {
+  currentGender = gender;
+  document.querySelectorAll('.gender-tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   renderGrid();
 }
@@ -1103,7 +1181,11 @@ function renderGrid() {
   const grid = document.getElementById('skins-grid');
   grid.innerHTML = '';
   const entries = Object.entries(DB);
-  const filtered = currentFilter === 'all' ? entries : entries.filter(([,s])=>s.cat===currentFilter);
+  let filtered = currentFilter === 'all' ? entries : entries.filter(([,s])=>s.cat===currentFilter);
+  // Apply gender filter
+  if (currentGender !== 'all') {
+    filtered = filtered.filter(([,s]) => detectGender(s) === currentGender);
+  }
   filtered.sort(([a],[b]) => parseInt(a)-parseInt(b));
 
   filtered.forEach(([id, skin]) => {
